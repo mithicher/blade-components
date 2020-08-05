@@ -18,9 +18,11 @@ return [
         'children' => [
             'Alert' => 'docs/alert',
             'Avatar' => 'docs/avatar',
+            'Confirm Dialog' => 'docs/confirm',
             'Datatable' => 'docs/datatable',
             'EasyMDE Editor' => 'docs/easymde-editor',
             'Pikaday Datepicker' => 'docs/pikaday',
+            'Quill Editor' => 'docs/quill-editor',
             'Read More/Read Less' => 'docs/read-more-read-less',
             'Toastr' => 'docs/toastr',
             'Trix Editor' => 'docs/trix-editor',

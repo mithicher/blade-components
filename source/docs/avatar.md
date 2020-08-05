@@ -28,6 +28,8 @@ It takes a size parameter where you can pass ```small```, ```medium``` and ```la
 ### Component
 
 ```php
+// components/avatar.blade.php
+
 @php
 	if (! function_exists('getNameInitials')) {
 		function getNameInitials($name) {

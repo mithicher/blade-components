@@ -11,6 +11,9 @@ Pikaday Datepicker component powered by AlpineJS, Blade Component and Uppy.
 
 [Pikaday - A refreshing JavaScript Datepicker](https://pikaday.com/).
 
+![Datepicker](/assets/img/components/pikaday.png)
+
+
 ### Usage
 
 Include the script and style of pikaday.
