@@ -20,7 +20,9 @@ return [
             'Avatar' => 'docs/avatar',
             'Confirm Dialog' => 'docs/confirm',
             'Datatable' => 'docs/datatable',
+            'Dropdown' => 'docs/dropdown',
             'EasyMDE Editor' => 'docs/easymde-editor',
+            'Multiselect' => 'docs/multiselect',
             'Pikaday Datepicker' => 'docs/pikaday',
             'Quill Editor' => 'docs/quill-editor',
             'Read More/Read Less' => 'docs/read-more-read-less',
@@ -29,6 +31,12 @@ return [
             'Uppy Uploader' => 'docs/uppy-uploader',
         ]
     ],
+
+    'Example Page' => [
+        'children' => [
+            'Login' => 'docs/login-page'
+        ]
+    ]
 
     // 'Getting Started' => [
     //     //'url' => 'docs/getting-started',
