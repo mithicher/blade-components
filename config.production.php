@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'baseUrl' => 'https://my-jigsaw-docs.com',
+    'baseUrl' => 'https://blade-components.netlify.app',
     'production' => true,
 
     // DocSearch credentials
