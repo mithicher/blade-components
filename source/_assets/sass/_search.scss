@@ -6,20 +6,21 @@
 
     @screen lg {
         &:focus {
-            @apply .w-2/3;
+            //@apply .w-2/3;
         }
     }
 
     @screen xl {
         &:focus {
-            @apply .w-1/2;
+            //@apply .w-1/2;
         }
     }
 
     &__wrapper {
         @apply absolute;
         @apply bg-white;
-        @apply mt-7;
+       // @apply mt-7;
+        @apply mt-3;
         @apply left-0;
         @apply top-0;
         @apply px-4;

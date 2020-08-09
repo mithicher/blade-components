@@ -28,6 +28,7 @@ return [
             'Read More/Read Less' => 'docs/read-more-read-less',
             'Toastr' => 'docs/toastr',
             'Trix Editor' => 'docs/trix-editor',
+            'Uppy Attachment' => 'docs/uppy-attachment',
             'Uppy Uploader' => 'docs/uppy-uploader',
         ]
     ],

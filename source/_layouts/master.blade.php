@@ -86,7 +86,14 @@
         </main>
 
         <script src="{{ mix('js/main.js', 'assets/build') }}"></script>
-
+        <script>
+            document.addEventListener('keypress', function(event) {
+                if (event.code == 'Slash') {
+                    event.preventDefault();
+                    document.getElementById('docsearch-input').focus();
+                }
+            });
+        </script>
         @stack('scripts')
 
         <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
