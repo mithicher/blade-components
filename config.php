@@ -6,7 +6,7 @@ return [
     'baseUrl' => '',
     'production' => false,
     'siteName' => 'Blade Components',
-    'siteDescription' => 'Beautiful Reusable UI powered by ALpineJS and Laravel Blade',
+    'siteDescription' => 'Beautiful Reusable UI powered by AlpineJS and Laravel Blade',
    
     // Algolia DocSearch credentials
     'docsearchApiKey' => '25626fae796133dc1e734c6bcaaeac3c',

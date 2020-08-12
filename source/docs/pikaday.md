@@ -162,13 +162,15 @@ Include the script and style of pikaday.
 @endpush
 ```
 
+> For dark theme visit here: [https://gist.github.com/mithicher/2266302fd2040b9acdd055b24baf224d](https://gist.github.com/mithicher/2266302fd2040b9acdd055b24baf224d)
+
 ```php
 // in blade view
 
 <x-pikaday 
 	label="Publish date" 
 	name="publish_date" 
-	value="{{ now() }}" />
+	value="{{ now()->format('D M d Y') }}" />
 ```
  
 

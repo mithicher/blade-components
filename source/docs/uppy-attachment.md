@@ -48,6 +48,8 @@ Include the script and style of uppy.
 	hint="Choose files to upload (PNG, JPG, PDF)" />
 ```
 
+> **Note:** No space is allowed in **allowed-files** props.
+
 ### Controller
 
 Create an endpoint for upload in routes ```web.php``` file.

@@ -49,7 +49,7 @@
     </head>
 
     <body class="antialiased flex flex-col justify-between min-h-screen bg-white text-gray-700 leading-normal">
-        <header class="md:sticky md:top-0 flex items-center shadow-sm bg-white h-16 mb-8 py-2" role="banner">
+        <header class="md:sticky md:top-0 flex items-center shadow-sm bg-white h-16 py-2" role="banner">
             <div class="container flex items-center max-w-8xl mx-auto px-4 lg:px-4">
                 <div class="flex items-center">
                     <a href="/" title="{{ $page->siteName }} home" class="inline-flex items-center">

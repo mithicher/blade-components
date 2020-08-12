@@ -7,11 +7,10 @@ section: content
 
 # Quill Editor {#quill-editor}
 
-Quill text editor powered by ALpineJS and Laravel Blade View Components.
+Quill text editor powered by ALpineJS and Laravel Blade View Components. It supports file uploading also.
 
 ![Quill Editor](/assets/img/components/quill.png)
 
-> Currently file upload is not working.
 
 ### Usage
 
@@ -19,12 +18,12 @@ Add the style and script file of Quill Editor.
 
 ```php
 @push('styles')
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/night-owl.min.css" rel="stylesheet">
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 @endpush
 
 @push('scripts')
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js" defer></script>
+<script src="https://unpkg.com/quill-paste-smart@latest/dist/quill-paste-smart.js" defer></script>
 @endpush
 ```
 
@@ -92,24 +91,24 @@ Custom styles for Quill Editor
 	margin-bottom: 0.75em;
 	line-height: 1.2;
 }
-.ql-editor p {
+.ql-editor p,
+.ql-editor ul,
+.ql-editor ol,
+.ql-snow .ql-editor pre {
 	margin-bottom: 1em;
 }
 .ql-editor strong {
 	font-weight: 700;
 }
-
-.ql-editor ul,
-.ql-editor ol {
-	margin-bottom: 1em;
+.ql-editor ol, 
+.ql-editor ul {
+	padding-left: 0;
 }
 .ql-editor li {
 	margin-bottom: 0.25em;
 }
 .ql-editor a {
 	color: #4299e1;
-	text-decoration: none;
-	border-bottom: 1px solid #bee3f8;
 }
 .ql-editor blockquote {
 	position: relative;
@@ -124,11 +123,15 @@ Custom styles for Quill Editor
 	font-style: normal;
 	letter-spacing: -0.05em;
 }
-.ql-editor pre {
+.ql-snow .ql-editor pre {
+	display: block;
 	border-radius: 0.5rem;
 	padding: 1rem;
-	margin-bottom: 1em;
 	font-size: 1rem;
+}
+.ql-snow .ql-editor img {
+	border-radius: 0.5rem;
+	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 .ql-editor iframe {
 	width: 100%;
@@ -144,7 +147,46 @@ Custom styles for Quill Editor
 	label="Body" 
 	name="body" 
 	value="" 
+	endpoint="/uploads"
 	placeholder="Content here..." />
+```
+
+Create an endpoint for image upload to work. See the sample Controller.
+
+```php
+Route::post('/uploads', 'UploadController@upload')->name('upload');
+```
+
+```php
+// UploadController.php
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+class UploadController extends Controller
+{
+    public function upload(Request $request)
+    {
+        if ($request->file('image')) {
+
+            if (is_array($request->image)) {
+                $path = collect($request->image)->map->store('tmp-editor-uploads');
+            } else {
+                $path = $request->image->store('tmp-editor-uploads');                
+            }
+
+            return response()->json([
+                'url' => $path
+            ], 200);
+        }
+
+        return;
+    }
+}
 ```
 
 ### Component
@@ -154,41 +196,109 @@ Custom styles for Quill Editor
 
 <div 
 	class="mb-5" 
-	x-data="{ content: '' }" 
-	x-init="
-		quill = new Quill($refs.quillEditor, {
-			scrollingContainer: '.ql-scrolling-container',
-			modules: {
-				toolbar: {
-					container: [
-					    [{'header': 2}, 'bold', 'italic', 'underline', 'strike'],
-					    ['link', 'blockquote', 'code-block', 'image', 'video'],
-						[{ list: 'ordered' }, { list: 'bullet' }],
-						['clean']
-					],
-					handlers: {
-						image: function () {
-							var range = quill.getSelection();
-							var value = prompt('Please enter your image URL');
-							if(value){
-								quill.insertEmbed(range.index, 'image', value, Quill.sources.USER);
-							}
-						}
+	x-data="{ 
+		content: '',
+		endpoint: '{{ $endpoint ?? '' }}',
+		csrf: '{{ csrf_token() }}',
+		selectLocalImage(quillInstance) {
+			const input = document.createElement('input');
+			input.setAttribute('type', 'file');
+			input.click();
+
+			// Listen upload local image and save to server
+			input.onchange = () => {
+				const file = input.files[0];
+
+				// file type is only image.
+				if (/^image\//.test(file.type)) {
+					this.saveToServer(file, quillInstance);
+				} else {
+					console.warn('You could only upload images.');
+				}
+			};
+		},
+		saveToServer(file, quillInstance) {
+			const fd = new FormData();
+			fd.append('image', file);
+
+			const xhr = new XMLHttpRequest();
+			xhr.open('POST', this.endpoint, true);
+			xhr.setRequestHeader('X-CSRF-Token', this.csrf);
+
+			xhr.upload.onprogress = function(event) {
+				var progress = Math.round(event.loaded / event.total * 100) + '%'; 
+		    	var progressBar = document.getElementById('quillProgressBar');
+
+		    	if (event.lengthComputable) {  
+           			progressBar.style = `width: ${parseFloat(progress)}`; 
+				 
+					// Upload finished
+					if (event.loaded == event.total) {
+						progressBar.style = 'width: 0%'; 
 					}
 				}
-			},
-			theme: 'snow',
-			placeholder: '{{ $placeholder ?? 'Write something great!' }}'
-		});
-		quill.on('text-change', function () {
-			content = quill.root.innerHTML;
-		});
-		quill.clipboard.addMatcher(Node.ELEMENT_NODE, function (node, delta) {
-			var plaintext = node.innerText;
-			var Delta = Quill.import('delta');
-			return new Delta().insert(plaintext);
-		});
-		content = quill.root.innerHTML;
+		    };
+
+			xhr.onload = function () {
+				if (this.status >= 200 && this.status < 300) {
+					// this is callback data: url
+					const data = JSON.parse(this.responseText);
+					// console.log(data);
+					
+					// push image url to rich editor.
+					const range = quillInstance.getSelection();
+					quillInstance.insertEmbed(range.index, 'image', `/${data.url}`);
+					// puts the cursor at the end of image
+					quillInstance.setSelection(range.index + 1, Quill.sources.SILENT);
+				}
+			};
+			xhr.send(fd);
+		} 
+	}" 
+	x-init="
+		document.addEventListener('DOMContentLoaded', () => {
+			quill = new Quill($refs.quillEditor, {
+				scrollingContainer: '.ql-scrolling-container',
+				modules: {
+					toolbar: {
+						container: [
+						    [{'header': 2}, 'bold', 'italic', 'underline', 'strike'],
+						    ['link', 'blockquote', 'code-block', 'image', 'video'],
+							[{ list: 'ordered' }, { list: 'bullet' }],
+							['clean']
+						]
+						// handlers: {
+						// 	image: function () {
+						// 		var range = quill.getSelection();
+						// 		var value = prompt('Please enter your image URL');
+						// 		if(value){
+						// 			quill.insertEmbed(range.index, 'image', value, Quill.sources.USER);
+						// 		}
+						// 	}
+						// }
+					}
+				},
+				theme: 'snow',
+				placeholder: '{{ $placeholder ?? 'Write something great!' }}'
+			});
+			quill.on('text-change', function () {
+				let html = quill.root.innerHTML;
+				if (html === '<p><br></p>') html = ''
+				content = html;
+			});
+			quill.clipboard.addMatcher(Node.ELEMENT_NODE, function (node, delta) {
+				var plaintext = node.innerText.replace(/\s+/g, ' ').trim();
+				var Delta = Quill.import('delta');
+				return new Delta().insert(plaintext);
+			});
+			// quill editor add image handler
+			quill.getModule('toolbar').addHandler('image', () => {
+				selectLocalImage(quill);
+			});
+			content = (quill.root.innerHTML === '<p><br></p>')
+					? '' 
+					: quill.root.innerHTML;
+		})
 	"
 	x-cloak>
 	@if($label ?? null)
@@ -201,9 +311,14 @@ Custom styles for Quill Editor
 	@endif
 
 	<div class="relative {{ $errors->has($name) ? 'ql-editor-haserror' : '' }}">
-		<input type="hidden" name="{{ $name }}" :value="content">
+		
+		<div class="w-full pl-px pr-px bg-transparent z-20 absolute left-0 right-0" style="top: 38px;">
+  		  <div id="quillProgressBar" class="bg-green-600 text-xs leading-none h-1" style="width: 0%"></div>
+  		</div>
+  
+		<textarea class="hidden" name="{{ $name }}" :value="content"></textarea>
 		<div x-ref="quillEditor" x-model="content" class="bg-white min-h-full h-auto">
-			{!! old($name, $value) !!}
+			{!! old($name, $value ?? '') !!}
 		</div>
 		
 		@error($name)

@@ -42,6 +42,9 @@ class ContactController extends Controller
 
             $contacts = $contact->latest()->paginate(10);
 
+            // load relation if any
+            // $contacts->load('organization');
+
             return view('contacts._partial', compact('contacts'))->render();
     	}
 
@@ -295,15 +298,23 @@ This component has a custom pagination dependency. Place the pagination in ```re
 							@php $actions = collect($value['type']); @endphp
 
 							@if($actions->contains('edit') || $actions->contains('delete'))
-								<div class="text-gray-700 px-6 py-3 flex items-center justify-center">
-									@if($actions->contains('edit'))
-										<a class="underline text-indigo-500 mr-2" href="{{ route($model.'.edit', $item->id) }}">Edit</a>
-									@endif
-									@if($actions->contains('delete'))
-										<a class="underline text-red-500" href="#" x-on:click.prevent="showConfirm = true">Delete</a>
-									@endif
-								</div>
-							@endif
+                                <div class="text-gray-700 px-6 py-3 flex items-center justify-center">
+                                    @if($actions->contains('edit'))
+                                        @if (! empty($editRoute) && !empty($editId))
+                                            <a class="transition duration-500 ease-in-out underline underline-indigo-200 text-indigo-500 mr-2" href="{{ route($editRoute, $item[$editId]) }}">Edit</a>
+                                        @else
+                                            <span class="text-xs">Edit route & id not provided</span>
+                                        @endif
+                                    @endif
+                                    @if($actions->contains('delete'))
+                                        @if (! empty($deleteRoute) && !empty($deleteId))
+                                            <a class="transition duration-300 ease-in-out underline underline-red-200 text-red-500" href="#" x-on:click.prevent="showConfirm = true">Delete</a>
+                                        @else
+                                            <span class="text-xs">Delete route & id not provided</span>
+                                        @endif     
+                                    @endif
+                                </div>
+                            @endif
 						</td>
 					@endforeach
 
@@ -319,11 +330,13 @@ This component has a custom pagination dependency. Place the pagination in ```re
 										<button type="button" x-on:click="showConfirm = false" class="px-2 py-1 rounded-lg bg-white text-gray-600">Cancel</button>
 									</span>
 			 
-									<button 
-										x-ref="deleteButton"
-										x-on:click="$refs.deleteButton.classList.add('base-spinner', 'cursor-not-allowed'); deleteitem('{{ $item->id }}').then(() => $dispatch('reload')); $dispatch('notice', { type: 'success', text: 'item Deleted'})"
-										type="button" 
-										class="px-2 py-1 rounded-lg bg-red-500 text-white shadow-sm">Delete</button>
+									@if($actions->contains('delete'))
+                                        <button 
+                                            x-ref="deleteButton"
+                                            x-on:click="$refs.deleteButton.classList.add('base-spinner', 'cursor-not-allowed'); deleteitem('{{ route($deleteRoute, $item[$deleteId] ?? '') }}').then(() => $dispatch('reload')); $dispatch('notice', { type: 'success', text: 'item Deleted'})"
+                                            type="button" 
+                                            class="px-2 py-1 rounded-lg bg-red-500 text-white shadow-sm">Delete</button>
+                                    @endif
 								</div>
 							</div>
 						</div>
@@ -417,6 +430,35 @@ This component has a custom pagination dependency. Place the pagination in ```re
 		</div>
 	</div>
 @endif
+```
+
+### Edit / Delete Actions
+
+This allow us to show edit/delete button on the datatable component. Delete button out-of-the box allow user to confirm first before deleting. 
+
+> In the props ```edit-id="uuid"```, ```uuid``` is the coresponding table column by which the row can be deleted.
+
+```php
+<x-base-datatable
+	:headings="['#', 'First name', 'Last name', 'Email', 'Phone', 'Zip', 'Created at', 'Actions']"
+	:values="[
+		
+		...
+
+		[
+			'key' => 'action', 
+			'type' => ['delete', 'edit']
+		]
+	]"
+	:data="$contacts"
+	model="contacts"
+	edit-route="articles.edit" // route name of edit
+    edit-id="uuid" // delete key id or uuid
+    delete-route="articles.destroy" // route name of delete
+    delete-id="uuid" // delete key id or uuid
+	table-striped
+>
+</x-base-datatable>	
 ```
 
 ### Badge Display
