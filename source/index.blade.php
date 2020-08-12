@@ -25,10 +25,13 @@
                 </div>
             </div>
             
-            <div class="pt-10 w-1/2 hidden md:block">
-                <img src="/assets/img/hero.svg" alt="{{ $page->siteName }}" >    
+            <div class="w-3/5 hidden md:block">
+                <img 
+                    src="/assets/img/hero.svg" 
+                    alt="{{ $page->siteName }}" 
+                    class="object-cover">    
             </div>
-            
+
             <img src="/assets/img/hero.svg" alt="{{ $page->siteName }}" class="w-full md:hidden mx-auto mb-8 lg:mb-0">
         </div>
     </section>
