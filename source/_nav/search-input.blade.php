@@ -31,7 +31,7 @@
                 apiKey: '{{ $page->docsearchApiKey }}',
                 indexName: '{{ $page->docsearchIndexName }}',
                 inputSelector: '#docsearch-input',
-                debug: true // Set debug to true if you want to inspect the dropdown
+                debug: false // Set debug to true if you want to inspect the dropdown
             });
 
             const searchInput = {
