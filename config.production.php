@@ -5,6 +5,6 @@ return [
     'production' => true,
 
     // DocSearch credentials
-    'docsearchApiKey' => '',
-    'docsearchIndexName' => '',
+    'docsearchApiKey' => 'f5efaab80cca5160084ab78462e6f49d',
+    'docsearchIndexName' => 'mithicher_blade-components'
 ];

@@ -1,1 +1,10 @@
 // Add your custom styles here
+.markdown-content {
+	ul {
+		@apply .ml-4;
+	}
+
+	li {
+	    @apply .list-disc;
+	}
+}

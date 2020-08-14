@@ -38,6 +38,15 @@
 .algolia-autocomplete {
     @apply .text-right;
     @apply .w-full;
+    
+    .algolia-docsearch-suggestion {
+        @apply .no-underline;
+    }
+    
+    .algolia-docsearch-suggestion--category-header {
+        @apply .text-gray-700;
+        @apply .font-bold;
+    }
 
     .ds-dropdown-menu {
         @apply .w-full;

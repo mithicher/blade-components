@@ -9,7 +9,17 @@ section: content
 
 Simple datatable powered by Laravel Blade Components and ALpineJS. For this datatable to works we have to do some modification in our Controller.
 
+Available features are:
+
+- Search
+- Action - Edit / Delete Links
+- Pagination
+- Badge / Date Format / Data width
+
+
 ![Datatable](/assets/img/components/datatable.png)
+
+### Route
 
 Create a route in ```web.php```
 

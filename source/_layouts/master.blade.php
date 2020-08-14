@@ -49,7 +49,7 @@
     </head>
 
     <body class="antialiased flex flex-col justify-between min-h-screen bg-white text-gray-700 leading-normal">
-        <header class="md:sticky md:top-0 flex items-center shadow-sm bg-white h-16 py-2" role="banner">
+        <header class="sticky top-0 flex items-center shadow-sm bg-white h-16 py-2" role="banner">
             <div class="container flex items-center max-w-8xl mx-auto px-4 lg:px-4">
                 <div class="flex items-center">
                     <a href="/" title="{{ $page->siteName }} home" class="inline-flex items-center">
@@ -96,7 +96,7 @@
         </script>
         @stack('scripts')
 
-        <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
+        <footer class="bg-white text-center text-sm py-4" role="contentinfo">
             <ul class="flex flex-col md:flex-row justify-center">
                 <li class="md:mr-2">
                    Created by <a href="https://mithicher.dev">Mithicher</a>.

@@ -37,6 +37,8 @@ Include the script and style of uppy.
 @endpush
 ```
 
+> Use `@once` directive available in laravel `v7.25.0` wherever possible. 
+
 ```php
 // in blade view
 

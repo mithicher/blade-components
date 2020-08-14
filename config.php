@@ -9,8 +9,8 @@ return [
     'siteDescription' => 'Beautiful Reusable UI powered by AlpineJS and Laravel Blade',
    
     // Algolia DocSearch credentials
-    'docsearchApiKey' => '25626fae796133dc1e734c6bcaaeac3c',
-    'docsearchIndexName' => 'docsearch',
+    'docsearchApiKey' => 'f5efaab80cca5160084ab78462e6f49d',
+    'docsearchIndexName' => 'mithicher_blade-components',
 
     // navigation menu
     'navigation' => require_once('navigation.php'),
