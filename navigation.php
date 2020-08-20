@@ -33,6 +33,13 @@ return [
         ]
     ],
 
+    'Snippets' => [
+        'children' => [
+            'Helpers' => 'docs/snippets',
+            'Turbolinks' => 'docs/turbolinks'
+        ]
+    ],
+
     'Example Page' => [
         'children' => [
             'Login' => 'docs/login-page'
