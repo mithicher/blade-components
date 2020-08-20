@@ -31,7 +31,7 @@
             <!-- Insert analytics code here -->
         @endif
 
-        <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ mix('css/main.css', 'assets/build') }}">
 
         @if ($page->docsearchApiKey && $page->docsearchIndexName)
@@ -39,9 +39,8 @@
         @endif
 
         <style>
-            html { font-family: 'DM Sans', sans-serif; }
-            code {font-family: 'DM Mono', monospace;
-            }
+            html { font-family: 'Inter', sans-serif; }
+            code { font-family: 'DM Mono', monospace; }
         </style>
     </head>
 
@@ -49,7 +48,7 @@
         <header class="z-50 sticky top-0 flex items-center shadow-sm bg-white h-16 py-2" role="banner">
             <div class="container flex items-center max-w-6xl mx-auto px-4 lg:px-4">
                 <div class="flex items-center">
-                    <a href="/" title="{{ $page->siteName }} home" class="inline-flex items-center">
+                    <a href="/" title="{{ $page->siteName }} home" class="inline-flex items-center no-underline">
                         <img class="h-6 md:h-6 mr-3" src="/assets/img/logo.svg" alt="{{ $page->siteName }} logo" />
 
                         <h1 class="text-lg md:text-2xl text-blue-900 font-semibold hover:text-blue-600 my-0 pr-4">{{ $page->siteName }}</h1>

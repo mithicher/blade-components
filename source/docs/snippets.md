@@ -169,3 +169,23 @@ $rules =  [
 	]
 ];
 ```
+
+### Convert http text to links
+
+It converts text starting with ```http/https``` to anchor links.
+
+```php
+if (! function_exists('textToLinks')) {
+	function textToLinks($html)
+	{
+	     // Check for http/ftp/email and convert to links
+	     $reg_exUrl = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
+
+	     if(preg_match($reg_exUrl, $html, $url)) {
+	         return preg_replace($reg_exUrl, '<a target="_blank" rel="noopener" class="text-indigo-500 border-b border-indigo-200 hover:text-indigo-700 transition duration-300 ease-out" href="'. $url[0] . '"> '. $url[0] .'</a> ', $html);
+	     }
+	     
+	    return $html;
+	}
+}
+```

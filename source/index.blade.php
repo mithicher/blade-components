@@ -1,7 +1,6 @@
 @extends('_layouts.master')
 
 @section('body')
-<!-- container max-w-6xl mx-auto  -->
 <div class="bg-gray-100">
     <section class="pt-6 md:pt-12 container md:max-w-6xl md:mx-auto">
         <div class="flex flex-col md:flex-row overflow-hidden px-4">

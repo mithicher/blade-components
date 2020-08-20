@@ -221,6 +221,20 @@ class HomeController extends Controller
 }
 ```
 
+### Display Progress Bar
+
+Turbolinks installs a CSS-based progress bar to provide feedback while issuing a request.
+The progress bar is enabled by default.
+
+```css
+.turbolinks-progress-bar {
+	height: 5px;
+	background-color: green;
+}
+```
+
+> It appears automatically for any page that takes longer than 500ms to load.
+
 ### References
 
 - [Turbolinks Github page](https://github.com/turbolinks/turbolinks)

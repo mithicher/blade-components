@@ -36,7 +36,9 @@ return [
     'Snippets' => [
         'children' => [
             'Helpers' => 'docs/snippets',
-            'Turbolinks' => 'docs/turbolinks'
+            'Turbolinks' => 'docs/turbolinks',
+            'Date in JS' => 'docs/date-in-js',
+            'Markdown' => 'docs/markdown-helpers'
         ]
     ],
 

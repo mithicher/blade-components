@@ -12,7 +12,7 @@
 
     <input
         id="docsearch-input"
-        class="docsearch-input relative block h-10 transition-fast w-full bg-gray-100 outline-none rounded-full text-gray-700 border border-gray-200 focus:border-blue-300 ml-auto px-4 pb-0"
+        class="docsearch-input relative block h-10 transition-fast w-full bg-gray-200 outline-none rounded-full text-gray-700 border border-transparent focus:border-blue-300 focus:bg-gray-100 ml-auto px-4 pb-0 placeholder-gray-500"
         name="docsearch"
         type="text"
         placeholder='Search the docs (Press "/" to focus)'
